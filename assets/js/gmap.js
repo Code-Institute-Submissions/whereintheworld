@@ -1,5 +1,7 @@
 //AutoInit All Materialize CSS
-M.AutoInit();
+$(document).ready(function () {
+  $('.tabs').tabs();
+});
 
 function initAutocomplete() {
 
@@ -24,7 +26,6 @@ function initAutocomplete() {
   //Create the autocomplete search bar and link it to the UI element
   var autocomplete = new google.maps.places.Autocomplete(input, options);
 
-
   //this is for the place Details
   var service = new google.maps.places.PlacesService(map);
 
@@ -47,12 +48,11 @@ function initAutocomplete() {
     place = autocomplete.getPlace();
     latitude = place.geometry.location.lat();
     longitude = place.geometry.location.lng();
+    address = place.formatted_address.split(",")[0];
     photoUrl = place.photos[0].getUrl({
       maxWidth: 400,
       maxHeight: 400
     });
-    address = place.formatted_address;
-
 
     if (!place.geometry) {
       // if user enters place that doesnt exist or presses enter
@@ -77,9 +77,9 @@ function initAutocomplete() {
     marker.setVisible(true);
 
 
-
-
     //The following are to return the names of hotels, night clubs, museums etc
+
+    $("#placeName").empty().append(`<h1>Attractions in ${address}</h1><div class="divider"></div>`)
 
     //Return Hotels
     service.nearbySearch({
@@ -108,7 +108,7 @@ function initAutocomplete() {
         lng: longitude
       },
       radius: 5000,
-      type: ["night_club"]
+      type: ['night_club']
     }, nightClub);
 
     //Return museums
@@ -118,7 +118,7 @@ function initAutocomplete() {
         lng: longitude
       },
       radius: 5000,
-      type: ["museum"]
+      type: ['museum']
     }, museum);
 
     //Return casinos
@@ -128,7 +128,7 @@ function initAutocomplete() {
         lng: longitude
       },
       radius: 5000,
-      type: ["casino"]
+      type: ['casino']
     }, casino);
 
   });
@@ -140,9 +140,9 @@ function initAutocomplete() {
 
 function restaurants(results, status) {
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#food").append(`<div class="col s12">I'm sorry but we were unable to find any restaurants near ${address}.</div>`);
+    $("#restaurants").append(`<div class="col s12">I'm sorry but we were unable to find any restaurants near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
-    $("#food").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
+    $("#restaurants").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
     console.log("Check your Quota")
   } else if (status === google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
@@ -152,17 +152,17 @@ function restaurants(results, status) {
   } else if (status === google.maps.places.PlacesServiceStatus.NOT_FOUND) {
     console.log("Place_ID not in database")
   } else if (status === google.maps.places.PlacesServiceStatus.OK) {
-    $("#food").empty().append(`<h2 class="center-align">Restaurants</h2>`)
+    //clear past results
+    $("#restaurants").empty();
     for (var i = 0; i < results.length; i++) {
       // createMarker(results[i]);
-      //             console.log(results[i].rating);
+      // console.log(results[i].name);
       var photoUrl = results[i].photos[0].getUrl({
         maxWidth: 400,
         maxHeight: 400
       });
       var rating = results[i].rating;
-      var openingHours = results[i].opening_hours;
-      $("#food").append(`<div class="col s3 card-panel"><p>${results[i].name}</p><img class="responsive-img" src="${photoUrl}"></img><p>Rating: ${rating}/5</p></div>`);
+      $("#restaurants").append(`<div class="col s12 m4 l3 card-panel" id="card${[i]}"><p>${results[i].name}</p><img class="responsive-img" src="${photoUrl}"></img><p>Rating: ${rating}/5</p></div>`);
     }
   }
 }
@@ -181,11 +181,17 @@ function nightClub(results, status) {
   } else if (status === google.maps.places.PlacesServiceStatus.NOT_FOUND) {
     console.log("Place_ID not in database")
   } else if (status === google.maps.places.PlacesServiceStatus.OK) {
-    $("#night_club").empty().append(`<h2 class="center-align">Night Clubs</h2>`)
+    //clear past results
+    $("#night_club").empty();
     for (var i = 0; i < results.length; i++) {
       // createMarker(results[i]);
       // console.log(results[i].name);
-      $("#night_club").append(`<div class="col s3 card-panel">${results[i].name}</div>`);
+      var photoUrl = results[i].photos[0].getUrl({
+        maxWidth: 400,
+        maxHeight: 400
+      });
+      var rating = results[i].rating;
+      $("#night_club").append(`<div class="col s3 card-panel"><p>${results[i].name}</p><img class="responsive-img" src="${photoUrl}"></img><p>Rating: ${rating}/5</p></div>`);
     }
   }
 }
@@ -204,11 +210,17 @@ function museum(results, status) {
   } else if (status === google.maps.places.PlacesServiceStatus.NOT_FOUND) {
     console.log("Place_ID not in database")
   } else if (status === google.maps.places.PlacesServiceStatus.OK) {
-    $("#museum").empty().append(`<h2 class="center-align">Museums</h2>`)
+    //clear past results
+    $("#museum").empty();
     for (var i = 0; i < results.length; i++) {
       // createMarker(results[i]);
       // console.log(results[i].name);
-      $("#museum").append(`<div class="col s3 card-panel">${results[i].name}</div>`);
+      var photoUrl = results[i].photos[0].getUrl({
+        maxWidth: 400,
+        maxHeight: 400
+      });
+      var rating = results[i].rating;
+      $("#museum").append(`<div class="col s3 card-panel"><p>${results[i].name}</p><img class="responsive-img" src="${photoUrl}"></img><p>Rating: ${rating}/5</p></div>`);
     }
   }
 }
@@ -227,11 +239,17 @@ function casino(results, status) {
   } else if (status === google.maps.places.PlacesServiceStatus.NOT_FOUND) {
     console.log("Place_ID not in database")
   } else if (status === google.maps.places.PlacesServiceStatus.OK) {
-    $("#casino").empty().append(`<h2 class="center-align">Casinos</h2>`)
+    //clear past results
+    $("#casino").empty();
     for (var i = 0; i < results.length; i++) {
       // createMarker(results[i]);
       // console.log(results[i].name);
-      $("#casino").append(`<div class="col s3 card-panel">${results[i].name}</div>`);
+      var photoUrl = results[i].photos[0].getUrl({
+        maxWidth: 400,
+        maxHeight: 400
+      });
+      var rating = results[i].rating;
+      $("#casino").append(`<div class="col s3 card-panel"><p>${results[i].name}</p><img class="responsive-img" src="${photoUrl}"></img><p>Rating: ${rating}/5</p></div>`);
     }
   }
 }
@@ -250,11 +268,35 @@ function hotels(results, status) {
   } else if (status === google.maps.places.PlacesServiceStatus.NOT_FOUND) {
     console.log("Place_ID not in database")
   } else if (status === google.maps.places.PlacesServiceStatus.OK) {
-    $("#lodging").empty().append(`<h2 class="center-align">Where To Stay</h2>`)
+    //clear past results
+    $("#lodging").empty();
     for (var i = 0; i < results.length; i++) {
       // createMarker(results[i]);
       // console.log(results[i]);
-      $("#lodging").append(`<div class="col s3 card-panel">${results[i].name}</div>`);
+      var photoUrl = results[i].photos[0].getUrl({
+        maxWidth: 400,
+        maxHeight: 400
+      });
+      var rating = results[i].rating;
+      $("#lodging").append(`<div class="col s3 card-panel"><p>${results[i].name}</p><img class="responsive-img" src="${photoUrl}"></img><p>Rating: ${rating}/5</p></div>`);
     }
   }
 }
+
+
+//Click Event for Headings
+$("#restEvent").click(function () {
+  console.log("Resaurant Markers");
+});
+$("#clubEvent").click(function () {
+  console.log("Night Club Markers");
+});
+$("#musEvent").click(function () {
+  console.log("Museum Markers");
+});
+$("#casEvent").click(function () {
+  console.log("Casino Markers");
+});
+$("#lodgeEvent").click(function () {
+  console.log("Lodging Markers");
+});

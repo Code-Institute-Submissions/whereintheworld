@@ -1,92 +1,74 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Where In The World</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-    <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+  <title>Where In The World</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
 </head>
+
 <body>
 
-    <header class="container" id="header">
-       <div class="row">
-       <div class="input-field col s9">
+  <header class="container" id="header">
+
+    <div class="row">
+      <div class="input-field col s12">
         <input type="text" id="destSearch" placeholder="Enter a Destination" />
+      </div>
+    </div>
+
+  </header>
+
+  <main class="container">
+    <div class="row">
+
+      <div class="col s12" id="map">
+      </div>
+
+      <div class="col s12 m6 card-panel hoverable" id="night_club">
+        <h2 class="center-align">Night Clubs</h2>
+      </div>
+    </div>
+    <div class="col s12 center-align" id="placeName">
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <ul class="tabs">
+          <li class="tab col m5ths s6"><a href="#restaurants" id="restEvent">Restaurants</a></li>
+          <li class="tab col m5ths s6"><a href="#night_club" id="clubEvent">Night Clubs</a></li>
+          <li class="tab col m5ths s6"><a href="#museum" id="musEvent">Museums</a></li>
+          <li class="tab col m5ths s6"><a href="#casino" id="casEvent">Casinos</a></li>
+          <li class="tab col m5ths s12"><a href="#lodging" id="lodgeEvent">Hotels</a></li>
+        </ul>
+      </div>
+      <div id="restaurants" class="col s12"></div>
+      <div id="night_club" class="col s12"></div>
+      <div id="lodging" class="col s12"></div>
+      <div id="museum" class="col s12"></div>
+      <div id="casino" class="col s12"></div>
+    </div>
+
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="#!">Contact Us</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Learn More</a></li>
+          </ul>
         </div>
-        <div class="input-field col s3">
-    <select>
-      <option value="" selected>Cities</option>
-      <option value="1">Lodgings</option>
-      <option value="2">Restaurants</option>
-      <option value="3">Night Clubs</option>
-      <option value="3">Museums</option>
-      <option value="3">Casinos</option>
-    </select>
-  </div>
-   </div>
+      </div>
+    </div>
+  </footer>
 
-    </header>
-
-    <main class="container">
-        <div class="row">
-
-          <div class="col s12" id="map">
-          </div>
-
-          <div class="col s12" id="placeName">
-          </div>
-
-          <div class="col s12" id="searchType">
-          </div>
-
-          <div class="col s12 card-panel" id="attractions">
-
-            <h2 class="center-align">Attractions</h2>
-
-            <div class="row">
-              <div class="col s12 m6 card-panel hoverable" id="food">
-                <h2 class="center-align">Restaurants</h2>
-              </div>
-
-              <div class="col s12 m6 card-panel hoverable" id="night_club">
-                <h2 class="center-align">Night Clubs</h2>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col s12 m6 card-panel hoverable" id="museum">
-                <h2 class="center-align">Museums</h2>
-              </div>
-
-              <div class="col s12 m6 card-panel hoverable" id="casino">
-                <h2 class="center-align">Casinos</h2>
-                </div>
-              </div>
-
-          </div>
-         <div class="col s12 card-panel" id="lodging">
-            <h2 class="center-align">Where To Stay</h2>
-          </div>
-        </div>
-    </main>
-
-    <footer class="page-footer">
-          <div class="container">
-            <div class="row">
-              <div class="col l6 s12">
-                <ul>
-                  <li><a class="grey-text text-lighten-3" href="#!">Contact Us</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Learn More</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-    <script defer src="https://maps.googleapis.com/maps/api/js?&key=AIzaSyAuLvQIxZxSFpjc9FU7HbxGGLOhB3UGi_w&libraries=places&callback=initAutocomplete"></script>
-    <script src="assets/js/custom.js"></script>
-    <script src="assets/js/gmap.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <script defer src="https://maps.googleapis.com/maps/api/js?&key=AIzaSyAuLvQIxZxSFpjc9FU7HbxGGLOhB3UGi_w&libraries=places&callback=initAutocomplete"></script>
+  <script src="assets/js/custom.js"></script>
+  <script src="assets/js/gmap.js"></script>
 </body>
 </html>
