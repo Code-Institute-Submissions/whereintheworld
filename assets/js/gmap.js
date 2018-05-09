@@ -1,12 +1,35 @@
-//AutoInit All Materialize CSS
+//Init Materialize CSS Tabs
 $(document).ready(function () {
   $('.tabs').tabs();
+  $('#modalprime').modal();
 });
 
+
+//----------------------
+
+var placeTypes = [
+  'lodging',
+  'restaurant',
+  'night_club',
+  'museum',
+  'casino'
+];
+
+var attractId = [
+  'lodgeEvent',
+  'restEvent',
+  'nightEvent',
+  'musEvent',
+  'casEvent'
+];
+//----------------------
+
+
+//The main Google Maps JS Autocomplete function
 function initAutocomplete() {
 
   //Draw google map in 'map' element
-  var map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     center: {
       lat: 0,
       lng: 0
@@ -27,13 +50,14 @@ function initAutocomplete() {
   var autocomplete = new google.maps.places.Autocomplete(input, options);
 
   //this is for the place Details
-  var service = new google.maps.places.PlacesService(map);
+  service = new google.maps.places.PlacesService(map);
+  infowindow = new google.maps.InfoWindow();
 
   //Need this to bind search result to map (along with all the other stuff below)
   autocomplete.bindTo('bounds', map);
 
   //defining Marker for map
-  var marker = new google.maps.Marker({
+  marker = new google.maps.Marker({
     map: map,
     anchorPoint: new google.maps.Point(0, 0)
   });
@@ -55,7 +79,7 @@ function initAutocomplete() {
     });
 
     if (!place.geometry) {
-      // if user enters place that doesnt exist or presses enter
+      // if user enters place that doesnt exist or presses enter (not working)
       window.alert("No details available for input: '" + place.name + "'");
       return;
     }
@@ -65,84 +89,68 @@ function initAutocomplete() {
       // If the place has a geometry, pan the map over ot it
       map.fitBounds(place.geometry.viewport);
       map.setCenter(place.geometry.location);
-      map.setZoom(12);
+      map.setZoom(13);
     } else {
       // If the place has no geometry, do this instead
       map.setCenter(place.geometry.location);
       map.setZoom(17);
     }
 
-    //place marker on location
-    marker.setPosition(place.geometry.location);
-    marker.setVisible(true);
+    //The following commented out code places a marker at your city of choice
 
-
-    //The following are to return the names of hotels, night clubs, museums etc
+    //place marker on SEARCH location
+    //marker.setPosition(place.geometry.location);
+    //marker.setVisible(true);
 
     $("#placeName").empty().append(`<h1>Attractions in ${address}</h1><div class="divider"></div>`)
 
-    //Return Hotels
-    service.nearbySearch({
-      location: {
-        lat: latitude,
-        lng: longitude
-      },
-      radius: 5000,
-      type: ['lodging']
-    }, hotels);
 
-    //Return restaurants
-    service.nearbySearch({
-      location: {
-        lat: latitude,
-        lng: longitude
-      },
-      radius: 5000,
-      type: ['restaurant']
-    }, restaurants);
+    for (j = 0; j < placeTypes.length; j++) {
+      service.nearbySearch({
+        location: {
+          lat: latitude,
+          lng: longitude
+        },
+        radius: 5000,
+        type: placeTypes[j]
+      }, eval(placeTypes[j]));
 
-    //Return night clubs
-    service.nearbySearch({
-      location: {
-        lat: latitude,
-        lng: longitude
-      },
-      radius: 5000,
-      type: ['night_club']
-    }, nightClub);
-
-    //Return museums
-    service.nearbySearch({
-      location: {
-        lat: latitude,
-        lng: longitude
-      },
-      radius: 5000,
-      type: ['museum']
-    }, museum);
-
-    //Return casinos
-    service.nearbySearch({
-      location: {
-        lat: latitude,
-        lng: longitude
-      },
-      radius: 5000,
-      type: ['casino']
-    }, casino);
+    }
 
   });
 
 }
 
+// This function produces the modal popup for more information on a selected attraction
+function showPhotoModal(place) {
+  console.log("showPhotoModal function called")
+  let photos = place.photos
 
-//The following are functions to return names of places when search is completed
+  $('.modal-header').empty().append(`<h4>${place.name}</h4>`)
+  $('.modal-placeinfo').empty().append(`<p>Address: ${place.formatted_address}</p>
+    <p>Rating: ${place.rating}/5</p>
+    <p>Telephone Number: ${place.international_phone_number}</p>`)
+  $('.modal-photos').empty()
 
-function restaurants(results, status) {
+  for (i = 0; i < photos.length; i++) {
+    let x = photos[i].getUrl({
+      maxWidth: 600,
+      maxHeight: 600
+    })
+    $('.modal-photos').append(`<img class="responsive-img" src='${x}' />`)
+  }
+
+}
+
+
+//The following are functions to return names of attractions when search is completed
+//==================================================Restaurant==================================================
+function restaurant(results, status) {
+  resultsGlobal = results
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#restaurants").append(`<div class="col s12">I'm sorry but we were unable to find any restaurants near ${address}.</div>`);
+    $("#restaurant").append(`<div class="col s12">I'm sorry but we were unable to find any night clubs near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
-    $("#restaurants").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
+    $("#restaurant").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
     console.log("Check your Quota")
   } else if (status === google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
@@ -153,21 +161,59 @@ function restaurants(results, status) {
     console.log("Place_ID not in database")
   } else if (status === google.maps.places.PlacesServiceStatus.OK) {
     //clear past results
-    $("#restaurants").empty();
+    $("#restaurant").empty();
+    //cycle through nearBy results and return name/picture/rating for list (ALSO STORES PLACE_ID AS PLACEID TAG)
     for (var i = 0; i < results.length; i++) {
-      // createMarker(results[i]);
-      // console.log(results[i].name);
+      service.getDetails({
+        placeId: results[i].place_id
+      }, function (place) {
+        let marker = new google.maps.Marker({
+          map: map,
+          position: !!place ? place.geometry.location : null
+        });
+        google.maps.event.addListener(marker, 'click', function () {
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            'Place ID: ' + place.place_id + '<br>' +
+            place.formatted_address + '</div>');
+          infowindow.open(map, this);
+        });
+      });
       var photoUrl = results[i].photos[0].getUrl({
         maxWidth: 400,
         maxHeight: 400
       });
       var rating = results[i].rating;
-      $("#restaurants").append(`<div class="col s12 m4 l3 card-panel" id="card${[i]}"><p>${results[i].name}</p><img class="responsive-img" src="${photoUrl}"></img><p>Rating: ${rating}/5</p></div>`);
+      $("#restaurant").append(`<a class="modal-trigger" href="#modalprime">
+    <div class="col s12 m6 l4 card-deets" id="rest_modal${i}" placeid="${results[i].place_id}">
+      <div class="card">
+<div class="card-title">
+      <span class="card-title">${results[i].name}</span>
+</div>
+        <div class="card-image">
+          <img class="responsive-img" src="${photoUrl}">
+        </div>
+        <div class="card-content">
+          <p>Rating: ${rating}/5</p>
+        </div>
+      </div>
+  </div>
+    </a>`);
+      $(`#rest_modal${i}`).on('click', function () {
+        service.getDetails({
+          placeId: $(this).attr("placeid")
+        }, function (place) {
+          showPhotoModal(place)
+        });
+      });
     }
   }
 }
 
-function nightClub(results, status) {
+
+//====================================================Night Club================================================
+
+function night_club(results, status) {
+  resultsGlobal = results
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
     $("#night_club").append(`<div class="col s12">I'm sorry but we were unable to find any night clubs near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
@@ -183,22 +229,60 @@ function nightClub(results, status) {
   } else if (status === google.maps.places.PlacesServiceStatus.OK) {
     //clear past results
     $("#night_club").empty();
+    //cycle through nearBy results and return name/picture/rating for list (ALSO STORES PLACE_ID AS PLACEID TAG)
     for (var i = 0; i < results.length; i++) {
-      // createMarker(results[i]);
-      // console.log(results[i].name);
+      service.getDetails({
+        placeId: results[i].place_id
+      }, function (place) {
+        let marker = new google.maps.Marker({
+          map: map,
+          position: !!place ? place.geometry.location : null
+        });
+        google.maps.event.addListener(marker, 'click', function () {
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            'Place ID: ' + place.place_id + '<br>' +
+            place.formatted_address + '</div>');
+          infowindow.open(map, this);
+        });
+      });
       var photoUrl = results[i].photos[0].getUrl({
         maxWidth: 400,
         maxHeight: 400
       });
       var rating = results[i].rating;
-      $("#night_club").append(`<div class="col s3 card-panel"><p>${results[i].name}</p><img class="responsive-img" src="${photoUrl}"></img><p>Rating: ${rating}/5</p></div>`);
+      $("#night_club").append(`<a class="modal-trigger" href="#modalprime">
+    <div class="col s12 m6 l4 card-deets" id="nc_modal${i}" placeid="${results[i].place_id}">
+      <div class="card">
+        <div class="card-title">
+          <span class="card-title">${results[i].name}</span>
+        </div>
+        <div class="card-image">
+          <img class="responsive-img" src="${photoUrl}">
+        </div>
+        <div class="card-content">
+          <p>Rating: ${rating}/5</p>
+        </div>
+      </div>
+  </div>
+    </a>`);
+      $(`#nc_modal${i}`).on('click', function () {
+        service.getDetails({
+          placeId: $(this).attr("placeid")
+        }, function (place) {
+          showPhotoModal(place)
+        });
+      });
     }
   }
 }
 
+
+//======================================================Meuseum=================================================
+
 function museum(results, status) {
+  resultsGlobal = results
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#museum").append(`<div class="col s12">I'm sorry but we were unable to find any museums near ${address}.</div>`);
+    $("#museum").append(`<div class="col s12">I'm sorry but we were unable to find any night clubs near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
     $("#museum").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
@@ -212,22 +296,60 @@ function museum(results, status) {
   } else if (status === google.maps.places.PlacesServiceStatus.OK) {
     //clear past results
     $("#museum").empty();
+    //cycle through nearBy results and return name/picture/rating for list (ALSO STORES PLACE_ID AS PLACEID TAG)
     for (var i = 0; i < results.length; i++) {
-      // createMarker(results[i]);
-      // console.log(results[i].name);
+      service.getDetails({
+        placeId: results[i].place_id
+      }, function (place) {
+        let marker = new google.maps.Marker({
+          map: map,
+          position: !!place ? place.geometry.location : null
+        });
+        google.maps.event.addListener(marker, 'click', function () {
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            'Place ID: ' + place.place_id + '<br>' +
+            place.formatted_address + '</div>');
+          infowindow.open(map, this);
+        });
+      });
       var photoUrl = results[i].photos[0].getUrl({
         maxWidth: 400,
         maxHeight: 400
       });
       var rating = results[i].rating;
-      $("#museum").append(`<div class="col s3 card-panel"><p>${results[i].name}</p><img class="responsive-img" src="${photoUrl}"></img><p>Rating: ${rating}/5</p></div>`);
+      $("#museum").append(`<a class="modal-trigger" href="#modalprime">
+    <div class="col s12 m6 l4 card-deets" id="meus_modal${i}" placeid="${results[i].place_id}">
+      <div class="card">
+        <div class="card-title">
+          <span class="card-title">${results[i].name}</span>
+        </div>
+        <div class="card-image">
+          <img class="responsive-img" src="${photoUrl}">
+        </div>
+        <div class="card-content">
+          <p>Rating: ${rating}/5</p>
+        </div>
+      </div>
+  </div>
+    </a>`);
+      $(`#meus_modal${i}`).on('click', function () {
+        service.getDetails({
+          placeId: $(this).attr("placeid")
+        }, function (place) {
+          showPhotoModal(place)
+        });
+      });
     }
   }
 }
 
+
+//===================================================Casino=====================================================
+
 function casino(results, status) {
+  resultsGlobal = results
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#casino").append(`<div class="col s12">I'm sorry but we were unable to find any casinos near ${address}.</div>`);
+    $("#casino").append(`<div class="col s12">I'm sorry but we were unable to find any night clubs near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
     $("#casino").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
@@ -241,22 +363,60 @@ function casino(results, status) {
   } else if (status === google.maps.places.PlacesServiceStatus.OK) {
     //clear past results
     $("#casino").empty();
+    //cycle through nearBy results and return name/picture/rating for list (ALSO STORES PLACE_ID AS PLACEID TAG)
     for (var i = 0; i < results.length; i++) {
-      // createMarker(results[i]);
-      // console.log(results[i].name);
+      service.getDetails({
+        placeId: results[i].place_id
+      }, function (place) {
+        let marker = new google.maps.Marker({
+          map: map,
+          position: !!place ? place.geometry.location : null
+        });
+        google.maps.event.addListener(marker, 'click', function () {
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            'Place ID: ' + place.place_id + '<br>' +
+            place.formatted_address + '</div>');
+          infowindow.open(map, this);
+        });
+      });
       var photoUrl = results[i].photos[0].getUrl({
         maxWidth: 400,
         maxHeight: 400
       });
       var rating = results[i].rating;
-      $("#casino").append(`<div class="col s3 card-panel"><p>${results[i].name}</p><img class="responsive-img" src="${photoUrl}"></img><p>Rating: ${rating}/5</p></div>`);
+      $("#casino").append(`<a class="modal-trigger" href="#modalprime">
+    <div class="col s12 m6 l4 card-deets" id="cas_modal${i}" placeid="${results[i].place_id}">
+      <div class="card">
+        <div class="card-title">
+          <span class="card-title">${results[i].name}</span>
+        </div>
+        <div class="card-image">
+          <img class="responsive-img" src="${photoUrl}">
+        </div>
+        <div class="card-content">
+          <p>Rating: ${rating}/5</p>
+        </div>
+      </div>
+  </div>
+    </a>`);
+      $(`#cas_modal${i}`).on('click', function () {
+        service.getDetails({
+          placeId: $(this).attr("placeid")
+        }, function (place) {
+          showPhotoModal(place)
+        });
+      });
     }
   }
 }
 
-function hotels(results, status) {
+
+//====================================================Lodging===================================================
+
+function lodging(results, status) {
+  resultsGlobal = results
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#lodging").append(`<div class="col s12">I'm sorry but we were unable to find any hotels or lodgings near ${address}.</div>`);
+    $("#lodging").append(`<div class="col s12">I'm sorry but we were unable to find any night clubs near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
     $("#lodging").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
@@ -270,33 +430,75 @@ function hotels(results, status) {
   } else if (status === google.maps.places.PlacesServiceStatus.OK) {
     //clear past results
     $("#lodging").empty();
+    //cycle through nearBy results and return name/picture/rating for list (ALSO STORES PLACE_ID AS PLACEID TAG)
     for (var i = 0; i < results.length; i++) {
-      // createMarker(results[i]);
-      // console.log(results[i]);
+      service.getDetails({
+        placeId: results[i].place_id
+      }, function (place) {
+        let marker = new google.maps.Marker({
+          map: map,
+          position: !!place ? place.geometry.location : null
+        });
+        google.maps.event.addListener(marker, 'click', function () {
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            'Place ID: ' + place.place_id + '<br>' +
+            place.formatted_address + '</div>');
+          infowindow.open(map, this);
+        });
+      });
       var photoUrl = results[i].photos[0].getUrl({
         maxWidth: 400,
         maxHeight: 400
       });
       var rating = results[i].rating;
-      $("#lodging").append(`<div class="col s3 card-panel"><p>${results[i].name}</p><img class="responsive-img" src="${photoUrl}"></img><p>Rating: ${rating}/5</p></div>`);
+      $("#lodging").append(`<a class="modal-trigger" href="#modalprime">
+    <div class="col s12 m6 l4 card-deets" id="lodging_modal${i}" placeid="${results[i].place_id}">
+      <div class="card">
+        <div class="card-title">
+          <span class="card-title">${results[i].name}</span>
+        </div>
+        <div class="card-image">
+          <img class="responsive-img" src="${photoUrl}">
+        </div>
+        <div class="card-content">
+          <p>Rating: ${rating}/5</p>
+        </div>
+      </div>
+  </div>
+    </a>`);
+      $(`#lodging_modal${i}`).on('click', function () {
+        service.getDetails({
+          placeId: $(this).attr("placeid")
+        }, function (place) {
+          showPhotoModal(place)
+        });
+      });
     }
   }
 }
 
 
-//Click Event for Headings
+//==============================================================================================================
+
+
+//testings
+//Click Event for Headings (supposed to show markers of that specific type on the map when clicked and remove old ones)
+
 $("#restEvent").click(function () {
-  console.log("Resaurant Markers");
+  console.log("Restaurant Markers");
 });
-$("#clubEvent").click(function () {
+$("#nightEvent").click(function () {
   console.log("Night Club Markers");
 });
+
 $("#musEvent").click(function () {
   console.log("Museum Markers");
 });
+
 $("#casEvent").click(function () {
   console.log("Casino Markers");
 });
+
 $("#lodgeEvent").click(function () {
   console.log("Lodging Markers");
 });

@@ -121,3 +121,29 @@ main {
     width: 20%;
   }
 }
+
+.footer-li {
+  float: right;
+  padding-left: 25px;
+  padding-left: 25px;
+}
+
+.page-footer {
+  padding-top: 0;
+}
+
+.card-image {}
+
+.card-image > img {
+  height: 250px;
+}
+
+.card-title {
+  text-align: center;
+  height: 72px;
+}
+
+.modal-trigger {
+  font-family: 'Roboto';
+  color: black;
+}
