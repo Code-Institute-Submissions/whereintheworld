@@ -147,3 +147,46 @@ main {
   font-family: 'Roboto';
   color: black;
 }
+
+.modal-content {
+  min-width: 75%;
+  min-height: 90%;
+}
+
+.sub-heading {
+  font-family: 'Gloria Hallelujah', cursive;
+}
+
+.main-heading {
+  font-family: 'Righteous', cursive;
+}
+
+.tab-menu {
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
+
+.page-footer,
+.tab-menu > ul > li.indicator {
+  background-color: #039BE5;
+}
+
+.tabs .indicator {
+  background-color: #039BE5;
+}
+
+#restEvent,
+#nightEvent,
+#musEvent,
+#casEvent,
+#lodgeEvent {
+  color: #039BE5;
+}
+
+#restEvent:active {
+  background-color: #94D5F4;
+}
+
+.btn {
+  background-color: #039BE5;
+}

@@ -1,9 +1,18 @@
-//Init Materialize CSS Tabs
+//Init Things On Page Load
 $(document).ready(function () {
+  //Init Materialize CSS Things
   $('.tabs').tabs();
   $('#modalprime').modal();
+  $('#start-modal').modal();
+  //Init Anything else
+  $(".main-1").hide();
+  $('body').hide();
+  $('body').fadeIn(500);
 });
 
+$("#how-to-btn").click(function () {
+  $('#start-modal').modal('open');
+});
 
 //----------------------
 
@@ -24,10 +33,26 @@ var attractId = [
 ];
 //----------------------
 
+//==============================================================================================================
+
+//$("#destSearch").focusin(function () {
+//  $(".main-2").fadeOut(500);
+//});
+//$("#destSearch").focusout(function () {
+//  $(".main-2").fadeIn(500);
+//});
+
+
+
+
+
+
+
+//==============================================================================================================
 
 //The main Google Maps JS Autocomplete function
+//==============================================================================================================
 function initAutocomplete() {
-
   //Draw google map in 'map' element
   map = new google.maps.Map(document.getElementById('map'), {
     center: {
@@ -64,7 +89,12 @@ function initAutocomplete() {
 
   //Adds listener and executes function for when search result changes
   autocomplete.addListener('place_changed', function () {
-
+    //Change The Page Around A Bit When New Destination is Entered
+    $("#main-page-title, #main-page-search").removeClass("s12").addClass("s6");
+    $("#destSearch").removeClass("s10");
+    $("#how-to-btn").hide(500);
+    $(".main-1").show(500);
+    $(".main-2").hide(500);
     //remove old marker
     marker.setVisible(false);
 
@@ -102,7 +132,7 @@ function initAutocomplete() {
     //marker.setPosition(place.geometry.location);
     //marker.setVisible(true);
 
-    $("#placeName").empty().append(`<h1>Attractions in ${address}</h1><div class="divider"></div>`)
+    $("#placeName").empty().append(`<h1>Attractions in ${address}</h1>`)
 
 
     for (j = 0; j < placeTypes.length; j++) {
@@ -185,7 +215,7 @@ function restaurant(results, status) {
       var rating = results[i].rating;
       $("#restaurant").append(`<a class="modal-trigger" href="#modalprime">
     <div class="col s12 m6 l4 card-deets" id="rest_modal${i}" placeid="${results[i].place_id}">
-      <div class="card">
+      <div class="card z-depth-2">
 <div class="card-title">
       <span class="card-title">${results[i].name}</span>
 </div>
