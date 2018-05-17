@@ -17,6 +17,20 @@ body {
   flex-direction: column;
 }
 
+.bg-image {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background: url("../images/City_Landscape_Background.jpg") no-repeat;
+  background-position: center center;
+  background-size: 100%;
+  -webkit-background-size: 100%;
+  height: 100%;
+  filter: blur(3px);
+  transform: scale(1.01);
+}
+
 main {
   flex: 1 0 auto;
 }
@@ -50,14 +64,29 @@ main {
   font-family: Roboto;
 }
 
-#pac-container {
-  padding-bottom: 12px;
+.pac-container {
+  padding-bottom: 0px;
   margin-right: 12px;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
-.pac-controls {
-  display: inline-block;
-  padding: 5px 11px;
+.pac-item {
+  background-color: rgba(3, 155, 229, 0.8);
+  color: white;
+}
+
+.pac-item-query {
+  color: white;
+  font-weight: 300;
+}
+
+.pac-matched {
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.pac-icon {
+  color: #039be5;
 }
 
 .pac-controls label {
@@ -66,6 +95,7 @@ main {
   font-weight: 300;
 }
 
+/*
 #pac-input {
   background-color: #fff;
   font-family: Roboto;
@@ -76,7 +106,9 @@ main {
   text-overflow: ellipsis;
   width: 400px;
 }
+*/
 
+/*
 #pac-input:focus {
   border-color: #4d90fe;
 }
@@ -88,6 +120,7 @@ main {
   font-weight: 500;
   padding: 6px 12px;
 }
+*/
 
 /*Divide the grid into 5ths*/
 
@@ -125,14 +158,11 @@ main {
 .footer-li {
   float: right;
   padding-left: 25px;
-  padding-left: 25px;
 }
 
 .page-footer {
   padding-top: 0;
 }
-
-.card-image {}
 
 .card-image > img {
   height: 250px;
@@ -148,31 +178,32 @@ main {
   color: black;
 }
 
-.modal-content {
-  min-width: 75%;
-  min-height: 90%;
-}
-
 .sub-heading {
   font-family: 'Gloria Hallelujah', cursive;
+  color: white;
 }
 
 .main-heading {
   font-family: 'Righteous', cursive;
+  color: white;
+}
+
+#placeName {
+  color: white;
 }
 
 .tab-menu {
   margin-bottom: 40px;
-  margin-top: 40px;
+  margin-top: 10px;
+  padding: 0 !important;
 }
 
-.page-footer,
+.page-footer {
+  background-color: #000;
+}
+
 .tab-menu > ul > li.indicator {
-  background-color: #039BE5;
-}
-
-.tabs .indicator {
-  background-color: #039BE5;
+  background-color: #039be5;
 }
 
 #restEvent,
@@ -183,10 +214,38 @@ main {
   color: #039BE5;
 }
 
-#restEvent:active {
-  background-color: #94D5F4;
+#restEvent.active,
+#nightEvent.active,
+#musEvent.active,
+#casEvent.active,
+#lodgeEvent.active {
+  background-color: #e1f5fe;
+  font-weight: 500;
 }
 
 .btn {
   background-color: #039BE5;
+}
+
+.btn:hover {
+  background-color: #006db3;
+}
+
+.sub-heading,
+#destSearch {
+  display: inline-block;
+  color: white;
+}
+
+#mct {
+  padding-top: 0;
+  font-weight: 400;
+  text-shadow: -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+}
+
+.card {
+  min-width: 100%;
 }

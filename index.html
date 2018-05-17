@@ -3,21 +3,25 @@
 <head>
   <title>Where In The World</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-  <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Righteous|Roboto:300,400,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" />
+  <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
 </head>
 
 <body>
-
+  <div class="bg-image">
+  </div>
   <header class="container" id="header">
     <div class="row">
       <div class="col s12" id="main-page-title">
         <a href="/index.html" class="">
-          <h1 class="main-heading">WHERE IN THE WORLD</h1>
-          <span class="sub-heading">Find Your Next Holiday... Today!</span>
+          <div class="row">
+            <img class="col s2" src="assets/images/logo_i.png" alt="">
+            <h1 class="main-heading">WHERE IN THE .WORLD</h1>
+          </div>
         </a>
-      </div>
-      <div class="input-field col s12" id="main-page-search">
+        <span class="sub-heading">Find Your Next Holiday... Today!</span>
         <input class=" col s10" type="text" id="destSearch" placeholder="Enter the name of any country or city" />
         <a class="waves-effect waves-light btn col s2" id="how-to-btn">How To Use</a>
       </div>
@@ -26,33 +30,8 @@
   </header>
 
   <main class="container">
-    <!-- This is the Welcome Modal -->
-    <div id="start-modal" class="modal">
-      <div class="modal-content">
-        <h4>How To Use</h4>
-        <p>Enter a city anywhere in the world and we will find the local attractions for you and make it easy to contact them.</p>
-        <p>Or if you'd like some ideas, feel free to click on any of the destinations below to view their attractions.</p>
-      </div>
-      <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
-      </div>
-    </div>
     <!--==== Main Section Part 1 - All Main info regarding destination ====-->
     <div class="main-1">
-      <!-- Main Modal for attraction details -->
-      <div id="modalprime" class="modal">
-        <div class="modal-content">
-          <div class="modal-header">
-          </div>
-          <div class="modal-photos">
-          </div>
-          <div class="modal-placeinfo">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-        </div>
-      </div>
       <!-- Map Div -->
       <div class="col s12 z-depth-4" id="map">
       </div>
@@ -63,14 +42,14 @@
       <div class="row">
         <div class="col s12 z-depth-4 tab-menu">
           <ul class="tabs">
-            <li class="tab col m5ths s6"><a href="#restaurant" id="restEvent">Restaurants</a></li>
+            <li class="tab col m5ths s6"><a class="active" href="#restaurant" id="restEvent">Restaurants</a></li>
             <li class="tab col m5ths s6"><a href="#night_club" id="nightEvent">Night Clubs</a></li>
             <li class="tab col m5ths s6"><a href="#museum" id="musEvent">Museums</a></li>
             <li class="tab col m5ths s6"><a href="#casino" id="casEvent">Casinos</a></li>
             <li class="tab col m5ths s12"><a href="#lodging" id="lodgeEvent">Hotels</a></li>
           </ul>
         </div>
-        <div id="restaurant" class="col s12 active"></div>
+        <div id="restaurant" class="col s12"></div>
         <div id="night_club" class="col s12"></div>
         <div id="lodging" class="col s12"></div>
         <div id="museum" class="col s12"></div>
@@ -80,98 +59,147 @@
     <!--==== Main Section Part 2 - Preselected Blocks ====-->
     <div class="main-2">
       <div class="row">
-        <div class="col s12 m6 l4">
-          <div class="card">
-            <div class="card-image">
+        <div class="col s12 m6 l4 main-card1" lat="37.3890924" lon="-5.9844588">
+          <div class="card hoverable">
+            <div class="card-image hvr-underline-reveal">
               <img src="assets/images/seville.jpg">
-              <span class="card-title">Seville, Spain</span>
+              <span class="card-title" id="mct">Seville, Spain</span>
             </div>
           </div>
         </div>
-        <div class="col s12 m6 l4">
-          <div class="card">
+        <div class="col s12 m6 l4 main-card2">
+          <div class="card hoverable">
             <div class="card-image">
               <img src="assets/images/oslo.jpg">
-              <span class="card-title">Oslo, Norway</span>
+              <span class="card-title" id="mct">Oslo, Norway</span>
             </div>
           </div>
         </div>
-        <div class="col s12 m6 l4">
-          <div class="card">
+        <div class="col s12 m6 l4 main-card3">
+          <div class="card hoverable">
             <div class="card-image">
               <img src="assets/images/detroit.jpg">
-              <span class="card-title">Detroit, USA</span>
+              <span class="card-title" id="mct">Detroit, USA</span>
             </div>
           </div>
         </div>
-        <div class="col s12 m6 l4">
-          <div class="card">
+        <div class="col s12 m6 l4 main-card4">
+          <div class="card hoverable">
             <div class="card-image">
               <img src="assets/images/canberra.jpg">
-              <span class="card-title">Canberra, Australia</span>
+              <span class="card-title" id="mct">Canberra, Australia</span>
             </div>
           </div>
         </div>
-        <div class="col s12 m6 l4">
-          <div class="card">
+        <div class="col s12 m6 l4 main-card5">
+          <div class="card hoverable">
             <div class="card-image">
               <img src="assets/images/hamburg.jpg">
-              <span class="card-title">Hamburg, Germany</span>
+              <span class="card-title" id="mct">Hamburg, Germany</span>
             </div>
           </div>
         </div>
-        <div class="col s12 m6 l4">
-          <div class="card">
+        <div class="col s12 m6 l4 main-card6">
+          <div class="card hoverable">
             <div class="card-image">
               <img src="assets/images/guanajuato.jpg">
-              <span class="card-title">Guanajuato, Mexico</span>
+              <span class="card-title" id="mct">Guanajuato, Mexico</span>
             </div>
           </div>
         </div>
-        <div class="col s12 m6 l4">
-          <div class="card">
+        <div class="col s12 m6 l4 main-card7">
+          <div class="card hoverable">
             <div class="card-image">
               <img src="assets/images/kaohsiung.jpg">
-              <span class="card-title">Kaohsiung, Taiwan</span>
+              <span class="card-title" id="mct">Kaohsiung, Taiwan</span>
             </div>
           </div>
         </div>
-        <div class="col s12 m6 l4">
-          <div class="card">
+        <div class="col s12 m6 l4 main-card8">
+          <div class="card hoverable">
             <div class="card-image">
               <img src="assets/images/antwerp.jpg">
-              <span class="card-title">Antwerp, Belgium</span>
+              <span class="card-title" id="mct">Antwerp, Belgium</span>
             </div>
           </div>
         </div>
-        <div class="col s12 m6 l4">
-          <div class="card">
+        <div class="col s12 m6 l4 main-card9">
+          <div class="card hoverable">
             <div class="card-image">
               <img src="assets/images/matera.jpg">
-              <span class="card-title">Matera, Italy</span>
+              <span class="card-title" id="mct">Matera, Italy</span>
             </div>
           </div>
         </div>
-        <div class="col s12 m6 l4">
-          <div class="card">
+        <div class="col s12 m6 l4 main-card10">
+          <div class="card hoverable">
             <div class="card-image">
               <img src="assets/images/san-juan.jpg">
-              <span class="card-title">San Juan, Puerto Rico</span>
+              <span class="card-title" id="mct">San Juan, Puerto Rico</span>
             </div>
           </div>
         </div>
       </div>
     </div>
     <!--==== END OF MAIN ====-->
+    <!--==== Start of Modals ====-->
+    <!-- Main Modal for attraction details -->
+    <div id="modalprime" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="slider">
+          <ul class="slides">
+          </ul>
+        </div>
+        <div class="modal-placeinfo">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+      </div>
+    </div>
+    <!-- How To Use Modal -->
+    <div id="start-modal" class="modal">
+      <div class="modal-content">
+        <h4>How To Use</h4>
+        <p>Enter a city anywhere in the world and we will find the local attractions for you and make it easy for you to contact them.</p>
+        <p>Or if you'd like some ideas, feel free to click on any of the destinations below to view their attractions.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+      </div>
+    </div>
+    <!-- Contact Modal -->
+    <div id="contact-modal" class="modal">
+      <div class="modal-content">
+        <h4>Contact Me</h4>
+        <form action="">
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" name="firstname" placeholder="Your name..">
+          <label for="lname">Last Name</label>
+          <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+          <label for="subject">Subject</label>
+          <textarea id="subject" name="subject" placeholder="Write something.." style="height:170px"></textarea>
+          <input type="submit" class="btn waves-effect waves-green" value="Submit">
+        </form>
+      </div>
+    </div>
+
   </main>
   <!-- Footer -->
   <footer class="page-footer">
     <div class="container">
       <div class="row">
-        <div class="col s12 footer-items">
+        <div class="col s6 footer-items1">
+          <a class="icon-link round facebook fill"><i class="fab fa-facebook"></i></a>
+          <a class="icon-link round tumblr fill"><i class="fab fa-tumblr"></i></a>
+          <a class="icon-link round linkedin fill"><i class="fab fa-linkedin"></i></a>
+          <a class="icon-link round twitter fill"><i class="fab fa-twitter"></i></a>
+        </div>
+        <div class="col s6 footer-items2">
           <ul>
-            <li><a class="grey-text text-lighten-3 footer-li" href="#!">Contact Us</a></li>
-            <li><a class="grey-text text-lighten-3 footer-li" href="#!">Learn More</a></li>
+            <li><a class="text-lighten-3 footer-li" href="#contact-modal" id="contact-event">Contact Me</a></li>
           </ul>
         </div>
       </div>
@@ -181,7 +209,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
   <script defer src="https://maps.googleapis.com/maps/api/js?&key=AIzaSyAuLvQIxZxSFpjc9FU7HbxGGLOhB3UGi_w&libraries=places&callback=initAutocomplete"></script>
-  <script src="assets/js/custom.js"></script>
   <script src="assets/js/gmap.js"></script>
 </body>
 </html>

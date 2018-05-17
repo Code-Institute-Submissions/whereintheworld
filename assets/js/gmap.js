@@ -1,18 +1,26 @@
 //Init Things On Page Load
+$('body').hide();
+$(".main-1").hide();
+
 $(document).ready(function () {
-  //Init Materialize CSS Things
+  //Init Materialize CSS Tabs/Modals
   $('.tabs').tabs();
   $('#modalprime').modal();
   $('#start-modal').modal();
+  $('#contact-modal').modal();
   //Init Anything else
-  $(".main-1").hide();
-  $('body').hide();
-  $('body').fadeIn(500);
+  $('body').fadeIn(1000);
 });
+//End Page Load
 
+// Modal Functions
 $("#how-to-btn").click(function () {
   $('#start-modal').modal('open');
 });
+$("#contact-event").click(function () {
+  $('#contact-modal').modal('open');
+});
+
 
 //----------------------
 
@@ -33,20 +41,6 @@ var attractId = [
 ];
 //----------------------
 
-//==============================================================================================================
-
-//$("#destSearch").focusin(function () {
-//  $(".main-2").fadeOut(500);
-//});
-//$("#destSearch").focusout(function () {
-//  $(".main-2").fadeIn(500);
-//});
-
-
-
-
-
-
 
 //==============================================================================================================
 
@@ -60,6 +54,7 @@ function initAutocomplete() {
       lng: 0
     },
     zoom: 20,
+    mapTypeControl: false,
     mapTypeId: 'terrain'
   });
 
@@ -70,6 +65,35 @@ function initAutocomplete() {
   var options = {
     types: ['(cities)']
   };
+
+  // Choose First Result on Enter Key (https://stackoverflow.com/a/11703018)
+  var pac_input = document.getElementById('destSearch');
+  (function pacSelectFirst(input) {
+    // store the original event binding function
+    var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
+
+    function addEventListenerWrapper(type, listener) {
+      // Simulate a 'down arrow' keypress on hitting 'return' when no pac suggestion is selected,
+      // and then trigger the original listener.
+      if (type == "keydown") {
+        var orig_listener = listener;
+        listener = function (event) {
+          var suggestion_selected = $(".pac-item-selected").length > 0;
+          if (event.which == 13 && !suggestion_selected) {
+            var simulated_downarrow = $.Event("keydown", {
+              keyCode: 40,
+              which: 40
+            });
+            orig_listener.apply(input, [simulated_downarrow]);
+          }
+          orig_listener.apply(input, [event]);
+        };
+      }
+      _addEventListener.apply(input, [type, listener]);
+    }
+    input.addEventListener = addEventListenerWrapper;
+    input.attachEvent = addEventListenerWrapper;
+  })(pac_input);
 
   //Create the autocomplete search bar and link it to the UI element
   var autocomplete = new google.maps.places.Autocomplete(input, options);
@@ -90,11 +114,13 @@ function initAutocomplete() {
   //Adds listener and executes function for when search result changes
   autocomplete.addListener('place_changed', function () {
     //Change The Page Around A Bit When New Destination is Entered
-    $("#main-page-title, #main-page-search").removeClass("s12").addClass("s6");
-    $("#destSearch").removeClass("s10");
+    $(".sub-heading").addClass("col s4").css("margin-top", "15px");
+    $("#destSearch").removeClass("s10").addClass("s8");
+
     $("#how-to-btn").hide(500);
     $(".main-1").show(500);
     $(".main-2").hide(500);
+
     //remove old marker
     marker.setVisible(false);
 
@@ -110,7 +136,6 @@ function initAutocomplete() {
 
     if (!place.geometry) {
       // if user enters place that doesnt exist or presses enter (not working)
-      window.alert("No details available for input: '" + place.name + "'");
       return;
     }
 
@@ -134,7 +159,7 @@ function initAutocomplete() {
 
     $("#placeName").empty().append(`<h1>Attractions in ${address}</h1>`)
 
-
+    //This cycles through the different attraction functions getting all the info
     for (j = 0; j < placeTypes.length; j++) {
       service.nearbySearch({
         location: {
@@ -144,32 +169,33 @@ function initAutocomplete() {
         radius: 5000,
         type: placeTypes[j]
       }, eval(placeTypes[j]));
-
     }
-
+    $("#destSearch").blur();
   });
-
 }
-
+//End of Autocomplete
+//==============================================================================================================
 // This function produces the modal popup for more information on a selected attraction
 function showPhotoModal(place) {
   console.log("showPhotoModal function called")
   let photos = place.photos
 
-  $('.modal-header').empty().append(`<h4>${place.name}</h4>`)
-  $('.modal-placeinfo').empty().append(`<p>Address: ${place.formatted_address}</p>
-    <p>Rating: ${place.rating}/5</p>
-    <p>Telephone Number: ${place.international_phone_number}</p>`)
-  $('.modal-photos').empty()
-
+  $('.modal-header').empty().append(`<h1 class="center-align">${place.name}</h1>`)
+  $('.modal-placeinfo').empty().append(`<p class="center-align">Address: ${place.formatted_address}</p>
+    <p class="center-align">Rating: ${place.rating}/5</p>
+    <p class="center-align">Telephone Number: ${place.international_phone_number}</p>`)
+  $('.slides').empty()
   for (i = 0; i < photos.length; i++) {
     let x = photos[i].getUrl({
       maxWidth: 600,
       maxHeight: 600
     })
-    $('.modal-photos').append(`<img class="responsive-img" src='${x}' />`)
+    $('.slides').append(`<li><img src='${x}' /></li>`)
   }
-
+  $('.slider').slider({
+    height: 500,
+    interval: 5000
+  });
 }
 
 
@@ -215,7 +241,7 @@ function restaurant(results, status) {
       var rating = results[i].rating;
       $("#restaurant").append(`<a class="modal-trigger" href="#modalprime">
     <div class="col s12 m6 l4 card-deets" id="rest_modal${i}" placeid="${results[i].place_id}">
-      <div class="card z-depth-2">
+      <div class="card hvr-float">
 <div class="card-title">
       <span class="card-title">${results[i].name}</span>
 </div>
@@ -240,7 +266,7 @@ function restaurant(results, status) {
 }
 
 
-//====================================================Night Club================================================
+//----------------------------------------------------Night Club------------------------------------------------
 
 function night_club(results, status) {
   resultsGlobal = results
@@ -282,7 +308,7 @@ function night_club(results, status) {
       var rating = results[i].rating;
       $("#night_club").append(`<a class="modal-trigger" href="#modalprime">
     <div class="col s12 m6 l4 card-deets" id="nc_modal${i}" placeid="${results[i].place_id}">
-      <div class="card">
+      <div class="card hvr-float">
         <div class="card-title">
           <span class="card-title">${results[i].name}</span>
         </div>
@@ -307,7 +333,7 @@ function night_club(results, status) {
 }
 
 
-//======================================================Meuseum=================================================
+//------------------------------------------------------Meuseum-------------------------------------------------
 
 function museum(results, status) {
   resultsGlobal = results
@@ -349,7 +375,7 @@ function museum(results, status) {
       var rating = results[i].rating;
       $("#museum").append(`<a class="modal-trigger" href="#modalprime">
     <div class="col s12 m6 l4 card-deets" id="meus_modal${i}" placeid="${results[i].place_id}">
-      <div class="card">
+      <div class="card hvr-float">
         <div class="card-title">
           <span class="card-title">${results[i].name}</span>
         </div>
@@ -374,7 +400,7 @@ function museum(results, status) {
 }
 
 
-//===================================================Casino=====================================================
+//---------------------------------------------------Casino-----------------------------------------------------
 
 function casino(results, status) {
   resultsGlobal = results
@@ -416,7 +442,7 @@ function casino(results, status) {
       var rating = results[i].rating;
       $("#casino").append(`<a class="modal-trigger" href="#modalprime">
     <div class="col s12 m6 l4 card-deets" id="cas_modal${i}" placeid="${results[i].place_id}">
-      <div class="card">
+      <div class="card hvr-float">
         <div class="card-title">
           <span class="card-title">${results[i].name}</span>
         </div>
@@ -441,7 +467,7 @@ function casino(results, status) {
 }
 
 
-//====================================================Lodging===================================================
+//----------------------------------------------------Lodging---------------------------------------------------
 
 function lodging(results, status) {
   resultsGlobal = results
@@ -483,7 +509,7 @@ function lodging(results, status) {
       var rating = results[i].rating;
       $("#lodging").append(`<a class="modal-trigger" href="#modalprime">
     <div class="col s12 m6 l4 card-deets" id="lodging_modal${i}" placeid="${results[i].place_id}">
-      <div class="card">
+      <div class="card hvr-float">
         <div class="card-title">
           <span class="card-title">${results[i].name}</span>
         </div>
@@ -510,8 +536,6 @@ function lodging(results, status) {
 
 //==============================================================================================================
 
-
-//testings
 //Click Event for Headings (supposed to show markers of that specific type on the map when clicked and remove old ones)
 
 $("#restEvent").click(function () {
@@ -531,4 +555,38 @@ $("#casEvent").click(function () {
 
 $("#lodgeEvent").click(function () {
   console.log("Lodging Markers");
+});
+
+
+//==============================================================================================================
+
+$(".main-card1").click(function () {
+
+  let e = $.Event('keyup', {
+    keyCode: 69,
+    which: 69,
+    charCode: 69
+  })
+  $('#destSearch').val('Seville, Spain');
+  $("#destSearch").focus();
+  $("#destSearch").trigger(e);
+
+
+
+
+
+
+
+
+
+});
+
+
+
+$(".main-card2").click(function () {
+
+  $('#destSearch').val('');
+
+
+
 });
