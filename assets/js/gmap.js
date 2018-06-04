@@ -174,6 +174,7 @@ function initAutocomplete() {
   });
 }
 //End of Autocomplete
+
 //==============================================================================================================
 // This function produces the modal popup for more information on a selected attraction
 function showPhotoModal(place) {
@@ -204,7 +205,7 @@ function showPhotoModal(place) {
 function restaurant(results, status) {
   resultsGlobal = results
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#restaurant").append(`<div class="col s12">I'm sorry but we were unable to find any night clubs near ${address}.</div>`);
+    $("#restaurant").append(`<div class="col s12">I'm sorry but we were unable to find any restaurants near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
     $("#restaurant").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
@@ -338,7 +339,7 @@ function night_club(results, status) {
 function museum(results, status) {
   resultsGlobal = results
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#museum").append(`<div class="col s12">I'm sorry but we were unable to find any night clubs near ${address}.</div>`);
+    $("#museum").append(`<div class="col s12">I'm sorry but we were unable to find any museums near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
     $("#museum").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
@@ -405,7 +406,7 @@ function museum(results, status) {
 function casino(results, status) {
   resultsGlobal = results
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#casino").append(`<div class="col s12">I'm sorry but we were unable to find any night clubs near ${address}.</div>`);
+    $("#casino").append(`<div class="col s12">I'm sorry but we were unable to find any casinos near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
     $("#casino").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
@@ -472,7 +473,7 @@ function casino(results, status) {
 function lodging(results, status) {
   resultsGlobal = results
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#lodging").append(`<div class="col s12">I'm sorry but we were unable to find any night clubs near ${address}.</div>`);
+    $("#lodging").append(`<div class="col s12">I'm sorry but we were unable to find any lodgings near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
     $("#lodging").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
@@ -562,31 +563,8 @@ $("#lodgeEvent").click(function () {
 
 $(".main-card1").click(function () {
 
-  let e = $.Event('keyup', {
-    keyCode: 69,
-    which: 69,
-    charCode: 69
-  })
-  $('#destSearch').val('Seville, Spain');
-  $("#destSearch").focus();
-  $("#destSearch").trigger(e);
-
-
-
-
-
-
-
-
-
 });
 
-
-
 $(".main-card2").click(function () {
-
-  $('#destSearch').val('');
-
-
 
 });

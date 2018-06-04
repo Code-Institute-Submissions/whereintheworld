@@ -3,6 +3,7 @@
 <head>
   <title>Where In The World</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Righteous|Roboto:300,400,700" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" />
@@ -22,7 +23,7 @@
           </div>
         </a>
         <span class="sub-heading">Find Your Next Holiday... Today!</span>
-        <input class=" col s10" type="text" id="destSearch" placeholder="Enter the name of any country or city" />
+        <input class=" col s10" type="text" id="destSearch" placeholder="Enter the name of a Country or City" />
         <a class="waves-effect waves-light btn col s2" id="how-to-btn">How To Use</a>
       </div>
     </div>
@@ -62,7 +63,7 @@
         <div class="col s12 m6 l4 main-card1" lat="37.3890924" lon="-5.9844588">
           <div class="card hoverable">
             <div class="card-image hvr-underline-reveal">
-              <img src="assets/images/seville.jpg">
+              <img data-fcall="Seville" src="assets/images/seville.jpg">
               <span class="card-title" id="mct">Seville, Spain</span>
             </div>
           </div>
@@ -156,7 +157,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        <a href="#!" class=" modal-action modal-close btn waves-effect waves-light">Close</a>
       </div>
     </div>
     <!-- How To Use Modal -->
@@ -174,15 +175,38 @@
     <div id="contact-modal" class="modal">
       <div class="modal-content">
         <h4>Contact Me</h4>
-        <form action="">
-          <label for="fname">First Name</label>
-          <input type="text" id="fname" name="firstname" placeholder="Your name..">
-          <label for="lname">Last Name</label>
-          <input type="text" id="lname" name="lastname" placeholder="Your last name..">
-          <label for="subject">Subject</label>
-          <textarea id="subject" name="subject" placeholder="Write something.." style="height:170px"></textarea>
-          <input type="submit" class="btn waves-effect waves-green" value="Submit">
-        </form>
+        <div class="row">
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="first_name" type="text" class="validate">
+                <label for="first_name">First Name</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="last_name" type="text" class="validate">
+                <label for="last_name">Last Name</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="email" type="email" class="validate">
+                <label for="email">Email</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea id="textarea1" class="materialize-textarea"></textarea>
+                <label for="textarea1">Message</label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+    <i class="fas fa-angle-double-right"></i>
+
+  </button>
       </div>
     </div>
 
@@ -191,11 +215,13 @@
   <footer class="page-footer">
     <div class="container">
       <div class="row">
-        <div class="col s6 footer-items1">
-          <a class="icon-link round facebook fill"><i class="fab fa-facebook"></i></a>
-          <a class="icon-link round tumblr fill"><i class="fab fa-tumblr"></i></a>
-          <a class="icon-link round linkedin fill"><i class="fab fa-linkedin"></i></a>
-          <a class="icon-link round twitter fill"><i class="fab fa-twitter"></i></a>
+        <div class="col s6 footer-items1 social">
+          <ul>
+            <li><a href="#" title="Facebook"><i class="fab fa-facebook-square fa-lg" aria-hidden="true"></i></a></li>
+            <li><a href="#" title="Tumblr"><i class="fab fa-tumblr-square fa-lg" aria-hidden="true"></i></a></li>
+            <li><a href="#" title="LinkedIn"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+            <li><a href="#" title="Twitter"><i class="fab fa-twitter-square fa-lg" aria-hidden="true"></i></a></li>
+          </ul>
         </div>
         <div class="col s6 footer-items2">
           <ul>
