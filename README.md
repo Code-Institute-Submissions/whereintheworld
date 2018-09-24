@@ -11,7 +11,7 @@ The user can click on an individual attraction to view a gallery and additional 
 
 The site was made using Brackets IDE and tested using Google Chrome, Mozilla Firefox and Internet Explorer. Several Android devices as well as an iPhone 6s were also used in the testing process. Google Chrome inspector was used to simulate several device screen sizes I could not personally get my hands on.
 
-I deployed the site to [Github Pages](https://pages.github.com/) after all testing was concluded on the following link [here](https://shaunza.github.io/monkees-website/index.html).
+I deployed the site to [Github Pages](https://pages.github.com/) after all testing was concluded on the following link [here](https://shaunza.github.io/whereintheworld/index.html).
 
 
 ### The following is a table on the functionality of the site.
