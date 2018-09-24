@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
   <title>Where In The World</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
@@ -16,7 +17,7 @@
   <header class="container" id="header">
     <div class="row">
       <div class="col s12" id="main-page-title">
-        <a href="/index.html" class="">
+        <a href="index.html" class="">
           <div class="row">
             <img class="col s2" src="assets/images/logo_i.png" alt="">
             <h1 class="main-heading">WHERE IN THE .WORLD</h1>
@@ -43,11 +44,21 @@
       <div class="row">
         <div class="col s12 z-depth-4 tab-menu">
           <ul class="tabs">
-            <li class="tab col m5ths s6"><a class="active" href="#restaurant" id="restEvent">Restaurants</a></li>
-            <li class="tab col m5ths s6"><a href="#night_club" id="nightEvent">Night Clubs</a></li>
-            <li class="tab col m5ths s6"><a href="#museum" id="musEvent">Museums</a></li>
-            <li class="tab col m5ths s6"><a href="#casino" id="casEvent">Casinos</a></li>
-            <li class="tab col m5ths s12"><a href="#lodging" id="lodgeEvent">Hotels</a></li>
+            <li class="tab col m5ths s6">
+              <a class="active" href="#restaurant" id="restEvent">Restaurants</a>
+            </li>
+            <li class="tab col m5ths s6">
+              <a href="#night_club" id="nightEvent">Night Clubs</a>
+            </li>
+            <li class="tab col m5ths s6">
+              <a href="#museum" id="musEvent">Museums</a>
+            </li>
+            <li class="tab col m5ths s6">
+              <a href="#casino" id="casEvent">Casinos</a>
+            </li>
+            <li class="tab col m5ths s12">
+              <a href="#lodging" id="lodgeEvent">Hotels</a>
+            </li>
           </ul>
         </div>
         <div id="restaurant" class="col s12"></div>
@@ -164,7 +175,8 @@
     <div id="start-modal" class="modal">
       <div class="modal-content">
         <h4>How To Use</h4>
-        <p>Enter a city anywhere in the world and we will find the local attractions for you and make it easy for you to contact them.</p>
+        <p>Enter a city anywhere in the world and we will find the local attractions for you and make it easy for you to contact them.
+        </p>
         <p>Or if you'd like some ideas, feel free to click on any of the destinations below to view their attractions.</p>
       </div>
       <div class="modal-footer">
@@ -204,9 +216,9 @@
       </div>
       <div class="modal-footer">
         <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-    <i class="fas fa-angle-double-right"></i>
+          <i class="fas fa-angle-double-right"></i>
 
-  </button>
+        </button>
       </div>
     </div>
 
@@ -217,15 +229,33 @@
       <div class="row">
         <div class="col s6 footer-items1 social">
           <ul>
-            <li><a href="#" title="Facebook"><i class="fab fa-facebook-square fa-lg" aria-hidden="true"></i></a></li>
-            <li><a href="#" title="Tumblr"><i class="fab fa-tumblr-square fa-lg" aria-hidden="true"></i></a></li>
-            <li><a href="#" title="LinkedIn"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-            <li><a href="#" title="Twitter"><i class="fab fa-twitter-square fa-lg" aria-hidden="true"></i></a></li>
+            <li>
+              <a href="#" title="Facebook">
+                <i class="fab fa-facebook-square fa-lg" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" title="Tumblr">
+                <i class="fab fa-tumblr-square fa-lg" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" title="LinkedIn">
+                <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" title="Twitter">
+                <i class="fab fa-twitter-square fa-lg" aria-hidden="true"></i>
+              </a>
+            </li>
           </ul>
         </div>
         <div class="col s6 footer-items2">
           <ul>
-            <li><a class="text-lighten-3 footer-li" href="#contact-modal" id="contact-event">Contact Me</a></li>
+            <li>
+              <a class="text-lighten-3 footer-li" href="#contact-modal" id="contact-event">Contact Me</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -237,4 +267,5 @@
   <script defer src="https://maps.googleapis.com/maps/api/js?&key=AIzaSyAuLvQIxZxSFpjc9FU7HbxGGLOhB3UGi_w&libraries=places&callback=initAutocomplete"></script>
   <script src="assets/js/gmap.js"></script>
 </body>
+
 </html>

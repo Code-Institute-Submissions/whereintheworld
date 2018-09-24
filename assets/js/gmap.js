@@ -59,7 +59,7 @@ function initAutocomplete() {
   });
 
   //define input search bar
-  var input = document.getElementById('destSearch');
+  input = document.getElementById('destSearch');
 
   //Filter for only Cities
   var options = {
@@ -85,6 +85,7 @@ function initAutocomplete() {
               which: 40
             });
             orig_listener.apply(input, [simulated_downarrow]);
+            this.blur();
           }
           orig_listener.apply(input, [event]);
         };
@@ -152,7 +153,6 @@ function initAutocomplete() {
     }
 
     //The following commented out code places a marker at your city of choice
-
     //place marker on SEARCH location
     //marker.setPosition(place.geometry.location);
     //marker.setVisible(true);
@@ -172,49 +172,124 @@ function initAutocomplete() {
     }
     $("#destSearch").blur();
   });
+
+  // Main screen tiles!
+  $(".main-card1").click(function () {
+    $("#destSearch").val("Seville, Spain");
+    $("#destSearch").focus();
+    google.maps.event.trigger(input, 'keydown', {
+      keyCode: 13
+    });
+  });
+  $(".main-card2").click(function () {
+    $("#destSearch").val("Oslo, Norway");
+    $("#destSearch").focus();
+    google.maps.event.trigger(input, 'keydown', {
+      keyCode: 13
+    });
+  });
+  $(".main-card3").click(function () {
+    $("#destSearch").val("Detroit, USA");
+    $("#destSearch").focus();
+    google.maps.event.trigger(input, 'keydown', {
+      keyCode: 13
+    });
+  });
+  $(".main-card4").click(function () {
+    $("#destSearch").val("Canberra, Australia");
+    $("#destSearch").focus();
+    google.maps.event.trigger(input, 'keydown', {
+      keyCode: 13
+    });
+  });
+  $(".main-card5").click(function () {
+    $("#destSearch").val("Hamburg, Germany");
+    $("#destSearch").focus();
+    google.maps.event.trigger(input, 'keydown', {
+      keyCode: 13
+    });
+  });
+  $(".main-card6").click(function () {
+    $("#destSearch").val("Guanajuato, Mexico");
+    $("#destSearch").focus();
+    google.maps.event.trigger(input, 'keydown', {
+      keyCode: 13
+    });
+  });
+  $(".main-card7").click(function () {
+    $("#destSearch").val("Kaohsiung, Taiwan");
+    $("#destSearch").focus();
+    google.maps.event.trigger(input, 'keydown', {
+      keyCode: 13
+    });
+  });
+  $(".main-card8").click(function () {
+    $("#destSearch").val("Antwerp, Belgium");
+    $("#destSearch").focus();
+    google.maps.event.trigger(input, 'keydown', {
+      keyCode: 13
+    });
+  });
+  $(".main-card9").click(function () {
+    $("#destSearch").val("Matera, Italy");
+    $("#destSearch").focus();
+    google.maps.event.trigger(input, 'keydown', {
+      keyCode: 13
+    });
+  });
+  $(".main-card10").click(function () {
+    $("#destSearch").val("San Juan, Puerto Rico");
+    $("#destSearch").focus();
+    google.maps.event.trigger(input, 'keydown', {
+      keyCode: 13
+    });
+  });
+
 }
 //End of Autocomplete
 
 //==============================================================================================================
 // This function produces the modal popup for more information on a selected attraction
 function showPhotoModal(place) {
-  console.log("showPhotoModal function called")
+
   let photos = place.photos
-  var place_times = place.opening_hours.weekday_text.toString()
-  var new_place_times = place_times.split(',').join('<br />')
+  if (place.opening_hours == null) {} else {
+    var place_times = place.opening_hours.weekday_text.toString()
+    var new_place_times = place_times.split(',').join('<br />')
+  }
 
   $('.modal-header').empty().append(`<h1 class="center-align">${place.name}</h1>`)
   $('.modal-placeinfo').empty().append(`
-    <p class="left-align">Address: ${place.formatted_address}</p>
-    <p class="left-align">Overall Rating: ${place.rating}/5</p>
-    <p class="left-align">Telephone Number: ${place.international_phone_number}</p>
+    <p class="left-align"><strong>Address:</strong> ${place.formatted_address}</p>
+    <p class="left-align"><strong>Overall Rating:</strong> ${place.rating}/5</p>
+    <p class="left-align"><strong>Telephone Number:</strong> ${place.international_phone_number}</p>
     <p class="right-align">${new_place_times}</p>
     <hr>
     <h2 class="center-align">Reviews</h2>
     <p class="flow-text">${place.reviews[0].author_name} says:</p>
-    <p class="left-align">Rating: ${place.reviews[0].rating}/5</p>
+    <p class="left-align"><strong>Rating:</strong> ${place.reviews[0].rating}/5</p>
     <blockquote>${place.reviews[0].text}</blockquote>
-    <p class="left-align">Date: ${new Date(place.reviews[0].time*1000)}</p>
+    <p class="left-align"><strong>Date:</strong> ${new Date(place.reviews[0].time*1000)}</p>
     <br>
     <p class="flow-text">${place.reviews[1].author_name} says:</p>
-    <p class="left-align">Rating: ${place.reviews[1].rating}/5</p>
+    <p class="left-align"><strong>Rating:</strong> ${place.reviews[1].rating}/5</p>
     <blockquote>${place.reviews[1].text}</blockquote>
-    <p class="left-align">Date: ${new Date(place.reviews[1].time*1000)}</p>
+    <p class="left-align"><strong>Date:</strong> ${new Date(place.reviews[1].time*1000)}</p>
     <br>
     <p class="flow-text">${place.reviews[2].author_name} says:</p>
-    <p class="left-align">Rating: ${place.reviews[2].rating}/5</p>
+    <p class="left-align"><strong>Rating:</strong> ${place.reviews[2].rating}/5</p>
     <blockquote>${place.reviews[2].text}</blockquote>
-    <p class="left-align">Date: ${new Date(place.reviews[2].time*1000)}</p>
+    <p class="left-align"><strong>Date:</strong> ${new Date(place.reviews[2].time*1000)}</p>
     <br>
     <p class="flow-text">${place.reviews[3].author_name} says:</p>
-    <p class="left-align">Rating: ${place.reviews[3].rating}/5</p>
+    <p class="left-align"><strong>Rating:</strong> ${place.reviews[3].rating}/5</p>
     <blockquote>${place.reviews[3].text}</blockquote>
-    <p class="left-align">Date: ${new Date(place.reviews[3].time*1000)}</p>
+    <p class="left-align"><strong>Date:</strong> ${new Date(place.reviews[3].time*1000)}</p>
     <br>
     <p class="flow-text">${place.reviews[4].author_name} says:</p>
-    <p class="left-align">Rating: ${place.reviews[4].rating}/5</p>
+    <p class="left-align"><strong>Rating:</strong> ${place.reviews[4].rating}/5</p>
     <blockquote>${place.reviews[4].text}</blockquote>
-    <p class="left-align">Date: ${new Date(place.reviews[4].time*1000)}</p>
+    <p class="left-align"><strong>Date:</strong> ${new Date(place.reviews[4].time*1000)}</p>
     `)
   $('.slides').empty()
   for (i = 0; i < photos.length; i++) {
@@ -238,9 +313,9 @@ function restaurant(results, status) {
   //clear past results
   $("#restaurant").empty();
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#restaurant").append(`<div class="col s12">I'm sorry but we were unable to find any restaurants near ${address}.</div>`);
+    $("#restaurant").append(`<div class="col s12 error_text center-align">I'm sorry but we were unable to find any restaurants near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
-    $("#restaurant").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
+    $("#restaurant").append(`<div class="col s12 error_text center-align">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
     console.log("Check your Quota")
   } else if (status === google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
@@ -263,9 +338,9 @@ function restaurant(results, status) {
       $("#restaurant").append(`<a class="modal-trigger" href="#modalprime">
     <div class="col s12 m6 l4 card-deets" id="rest_modal${i}" placeid="${place_id}">
       <div class="card hvr-float">
-<div class="card-title">
-      <span class="card-title">${name}</span>
-</div>
+        <div class="card-title">
+          <span class="card-title">${name}</span>
+        </div>
         <div class="card-image">
           <img class="responsive-img" src="${photoUrl}">
         </div>
@@ -273,7 +348,7 @@ function restaurant(results, status) {
           <p>Rating: ${rating}/5</p>
         </div>
       </div>
-  </div>
+    </div>
     </a>`);
       $(`#rest_modal${i}`).on('click', function () {
         service.getDetails({
@@ -294,9 +369,9 @@ function night_club(results, status) {
   //clear past results
   $("#night_club").empty();
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#night_club").append(`<div class="col s12">I'm sorry but we were unable to find any night clubs near ${address}.</div>`);
+    $("#night_club").append(`<div class="col s12 error_text center-align">I'm sorry but we were unable to find any night clubs near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
-    $("#night_club").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
+    $("#night_club").append(`<div class="col s12 error_text center-align">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
     console.log("Check your Quota")
   } else if (status === google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
@@ -328,7 +403,7 @@ function night_club(results, status) {
           <p>Rating: ${rating}/5</p>
         </div>
       </div>
-  </div>
+    </div>
     </a>`);
       $(`#nc_modal${i}`).on('click', function () {
         service.getDetails({
@@ -349,9 +424,9 @@ function museum(results, status) {
   //clear past results
   $("#museum").empty();
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#museum").append(`<div class="col s12">I'm sorry but we were unable to find any museums near ${address}.</div>`);
+    $("#museum").append(`<div class="col s12 error_text center-align">I'm sorry but we were unable to find any museums near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
-    $("#museum").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
+    $("#museum").append(`<div class="col s12 error_text center-align">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
     console.log("Check your Quota")
   } else if (status === google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
@@ -383,7 +458,7 @@ function museum(results, status) {
           <p>Rating: ${rating}/5</p>
         </div>
       </div>
-  </div>
+    </div>
     </a>`);
       $(`#meus_modal${i}`).on('click', function () {
         service.getDetails({
@@ -404,9 +479,9 @@ function casino(results, status) {
   //clear past results
   $("#casino").empty();
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#casino").append(`<div class="col s12">I'm sorry but we were unable to find any casinos near ${address}.</div>`);
+    $("#casino").append(`<div class="col s12 error_text center-align">I'm sorry but we were unable to find any casinos near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
-    $("#casino").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
+    $("#casino").append(`<div class="col s12 error_text center-align">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
     console.log("Check your Quota")
   } else if (status === google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
@@ -438,7 +513,7 @@ function casino(results, status) {
           <p>Rating: ${rating}/5</p>
         </div>
       </div>
-  </div>
+    </div>
     </a>`);
       $(`#cas_modal${i}`).on('click', function () {
         service.getDetails({
@@ -459,9 +534,9 @@ function lodging(results, status) {
   //clear past results
   $("#lodging").empty();
   if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    $("#lodging").append(`<div class="col s12">I'm sorry but we were unable to find any lodgings near ${address}.</div>`);
+    $("#lodging").append(`<div class="col s12 error_text center-align">I'm sorry but we were unable to find any lodgings near ${address}.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
-    $("#lodging").append(`<div class="col s12">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
+    $("#lodging").append(`<div class="col s12 error_text center-align">I'm sorry but there seems to be an error on Google's side. Please try again later.</div>`);
   } else if (status === google.maps.places.PlacesServiceStatus.OVER_QUOTA_LIMIT) {
     console.log("Check your Quota")
   } else if (status === google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
@@ -481,20 +556,6 @@ function lodging(results, status) {
         maxWidth: 400,
         maxHeight: 400
       });
-      // service.getDetails({
-      //   placeId: results[i].place_id
-      // }, function (place) {
-      //   let marker = new google.maps.Marker({
-      //     map: map,
-      //     position: results[i].geometry.location
-      //   });
-      //   google.maps.event.addListener(marker, 'click', function () {
-      //     infowindow.setContent('<div><strong>' + name + '</strong><br>' +
-      //       'Place ID: ' + place_id + '</div>');
-      //     infowindow.open(map, this);
-      //   });
-      // });
-
       $("#lodging").append(`<a class="modal-trigger" href="#modalprime">
     <div class="col s12 m6 l4 card-deets" id="lodging_modal${i}" placeid="${place_id}">
       <div class="card hvr-float">
@@ -508,7 +569,7 @@ function lodging(results, status) {
           <p>Rating: ${rating}/5</p>
         </div>
       </div>
-  </div>
+    </div>
     </a>`);
       $(`#lodging_modal${i}`).on('click', function () {
         service.getDetails({
@@ -531,26 +592,36 @@ function setMapOnAll(map) {
   }
 }
 
+//----------------------------------
+
 $("#restEvent").click(function (map) {
-  console.log("Restaurant Markers");
-  //  markers = [];
-  //  for (var i = 0; i < resultsGlobal0.length; i++) {
-  //    //Add Markers to array and map
 
-  //    var marker = new google.maps.Marker({
-  //      position: resultsGlobal0[i].geometry.location,
-  //      map: map
-  //    });
-  //    markers.push(marker);
-  //    markers[i].setMap(map);
-  //  }
-
+  setMapOnAll(null);
+  markers = [];
+  for (var i = 0; i < resultsGlobal0.length; i++) {
+    service.getDetails({
+      placeId: resultsGlobal0[i].place_id
+    }, function (place) {
+      let marker = new google.maps.Marker({
+        map: map,
+        position: resultsGlobal0[i].geometry.location
+      });
+      markers.push(marker);
+      google.maps.event.addListener(marker, 'click', function () {
+        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+          place.formatted_address + '</div>');
+        infowindow.open(map, this);
+      });
+    });
+  }
 });
 
+//----------------------------------
+
 $("#nightEvent").click(function () {
-  console.log("Night Club Markers");
-  markers = [];
+
   setMapOnAll(null);
+  markers = [];
   for (var i = 0; i < resultsGlobal1.length; i++) {
     service.getDetails({
       placeId: resultsGlobal1[i].place_id
@@ -561,7 +632,7 @@ $("#nightEvent").click(function () {
       });
       markers.push(marker);
       google.maps.event.addListener(marker, 'click', function () {
-        console.log(place)
+
         infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
           'Place ID: ' + place.place_id + '<br>' +
           place.formatted_address + '</div>');
@@ -571,16 +642,62 @@ $("#nightEvent").click(function () {
   }
 });
 
+//----------------------------------
+
 $("#musEvent").click(function () {
-  console.log("Museum Markers");
+
+  setMapOnAll(null);
+  markers = [];
+  for (var i = 0; i < resultsGlobal2.length; i++) {
+    service.getDetails({
+      placeId: resultsGlobal2[i].place_id
+    }, function (place) {
+      let marker = new google.maps.Marker({
+        map: map,
+        position: resultsGlobal2[i].geometry.location
+      });
+      markers.push(marker);
+      google.maps.event.addListener(marker, 'click', function () {
+
+        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+          'Place ID: ' + place.place_id + '<br>' +
+          place.formatted_address + '</div>');
+        infowindow.open(map, this);
+      });
+    });
+  }
 });
+
+//----------------------------------
 
 $("#casEvent").click(function () {
-  console.log("Casino Markers");
+
+  setMapOnAll(null);
+  markers = [];
+  for (var i = 0; i < resultsGlobal3.length; i++) {
+    service.getDetails({
+      placeId: resultsGlobal3[i].place_id
+    }, function (place) {
+      let marker = new google.maps.Marker({
+        map: map,
+        position: resultsGlobal3[i].geometry.location
+      });
+      markers.push(marker);
+      google.maps.event.addListener(marker, 'click', function () {
+
+        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+          'Place ID: ' + place.place_id + '<br>' +
+          place.formatted_address + '</div>');
+        infowindow.open(map, this);
+      });
+    });
+  }
 });
 
+//----------------------------------
+
 $("#lodgeEvent").click(function () {
-  console.log("Lodging Markers");
+
   setMapOnAll(null);
   markers = [];
   for (var i = 0; i < resultsGlobal4.length; i++) {
@@ -593,7 +710,7 @@ $("#lodgeEvent").click(function () {
       });
       markers.push(marker);
       google.maps.event.addListener(marker, 'click', function () {
-        console.log(place)
+
         infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
           'Place ID: ' + place.place_id + '<br>' +
           place.formatted_address + '</div>');
@@ -605,11 +722,3 @@ $("#lodgeEvent").click(function () {
 
 
 //==============================================================================================================
-
-$(".main-card1").click(function () {
-
-});
-
-$(".main-card2").click(function () {
-
-});
