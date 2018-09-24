@@ -13,6 +13,7 @@ The site was made using Brackets IDE and tested using Google Chrome, Mozilla Fir
 
 I deployed the site to [Github Pages](https://pages.github.com/) after all testing was concluded on the following link [here](https://shaunza.github.io/whereintheworld/index.html).
 
+Mockups can be found in the /mockup/ folder in this Git repo.
 
 ### The following is a table on the functionality of the site.
 
