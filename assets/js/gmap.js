@@ -196,7 +196,7 @@ function initAutocomplete() {
     });
   });
   $(".main-card4").click(function () {
-    $("#destSearch").val("Canberra, Australia");
+    $("#destSearch").val("Durban, South Africa");
     $("#destSearch").focus();
     google.maps.event.trigger(input, 'keydown', {
       keyCode: 13
