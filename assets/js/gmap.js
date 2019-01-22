@@ -585,7 +585,7 @@ function lodging(results, status) {
 
 //==============================================================================================================
 
-//Click Event for Headings (supposed to show markers of that specific type on the map when clicked and remove old ones)
+//Click Event for Headings (shows markers of that specific type on the map when clicked and removes old ones)
 function setMapOnAll(map) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
@@ -594,129 +594,131 @@ function setMapOnAll(map) {
 
 //----------------------------------
 
-$("#restEvent").click(function (map) {
-
+$("#restEvent").click(function () {
   setMapOnAll(null);
   markers = [];
   for (var i = 0; i < resultsGlobal0.length; i++) {
-    service.getDetails({
-      placeId: resultsGlobal0[i].place_id
-    }, function (place) {
-      let marker = new google.maps.Marker({
-        map: map,
-        position: resultsGlobal0[i].geometry.location
+    (function (i) {
+      service.getDetails({
+        placeId: resultsGlobal0[i].place_id
+      }, function (place) {
+        let marker = new google.maps.Marker({
+          map: map,
+          position: resultsGlobal0[i].geometry.location
+        });
+        markers.push(marker);
+        google.maps.event.addListener(marker, 'click', function () {
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            place.formatted_address + '<br>' +
+            place.formatted_phone_number + '</div>');
+          infowindow.open(map, this);
+        });
       });
-      markers.push(marker);
-      google.maps.event.addListener(marker, 'click', function () {
-        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-          place.formatted_address + '</div>');
-        infowindow.open(map, this);
-      });
-    });
+    })(i);
   }
 });
 
 //----------------------------------
 
 $("#nightEvent").click(function () {
-
   setMapOnAll(null);
   markers = [];
   for (var i = 0; i < resultsGlobal1.length; i++) {
-    service.getDetails({
-      placeId: resultsGlobal1[i].place_id
-    }, function (place) {
-      let marker = new google.maps.Marker({
-        map: map,
-        position: resultsGlobal1[i].geometry.location
+    (function (i) {
+      service.getDetails({
+        placeId: resultsGlobal1[i].place_id
+      }, function (place) {
+        let marker = new google.maps.Marker({
+          map: map,
+          position: resultsGlobal1[i].geometry.location
+        });
+        markers.push(marker);
+        google.maps.event.addListener(marker, 'click', function () {
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            place.formatted_address + '<br>' +
+            place.formatted_phone_number + '</div>');
+          infowindow.open(map, this);
+        });
       });
-      markers.push(marker);
-      google.maps.event.addListener(marker, 'click', function () {
-
-        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-          'Place ID: ' + place.place_id + '<br>' +
-          place.formatted_address + '</div>');
-        infowindow.open(map, this);
-      });
-    });
+    })(i);
   }
 });
 
 //----------------------------------
 
 $("#musEvent").click(function () {
-
   setMapOnAll(null);
   markers = [];
   for (var i = 0; i < resultsGlobal2.length; i++) {
-    service.getDetails({
-      placeId: resultsGlobal2[i].place_id
-    }, function (place) {
-      let marker = new google.maps.Marker({
-        map: map,
-        position: resultsGlobal2[i].geometry.location
+    (function (i) {
+      service.getDetails({
+        placeId: resultsGlobal2[i].place_id
+      }, function (place) {
+        let marker = new google.maps.Marker({
+          map: map,
+          position: resultsGlobal2[i].geometry.location
+        });
+        markers.push(marker);
+        google.maps.event.addListener(marker, 'click', function () {
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            place.formatted_address + '<br>' +
+            place.formatted_phone_number + '</div>');
+          infowindow.open(map, this);
+        });
       });
-      markers.push(marker);
-      google.maps.event.addListener(marker, 'click', function () {
-
-        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-          'Place ID: ' + place.place_id + '<br>' +
-          place.formatted_address + '</div>');
-        infowindow.open(map, this);
-      });
-    });
+    })(i);
   }
 });
 
 //----------------------------------
 
 $("#casEvent").click(function () {
-
   setMapOnAll(null);
   markers = [];
   for (var i = 0; i < resultsGlobal3.length; i++) {
-    service.getDetails({
-      placeId: resultsGlobal3[i].place_id
-    }, function (place) {
-      let marker = new google.maps.Marker({
-        map: map,
-        position: resultsGlobal3[i].geometry.location
+    (function (i) {
+      service.getDetails({
+        placeId: resultsGlobal3[i].place_id
+      }, function (place) {
+        let marker = new google.maps.Marker({
+          map: map,
+          position: resultsGlobal3[i].geometry.location
+        });
+        markers.push(marker);
+        google.maps.event.addListener(marker, 'click', function () {
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            place.formatted_address + '<br>' +
+            place.formatted_phone_number + '</div>');
+          infowindow.open(map, this);
+        });
       });
-      markers.push(marker);
-      google.maps.event.addListener(marker, 'click', function () {
-
-        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-          'Place ID: ' + place.place_id + '<br>' +
-          place.formatted_address + '</div>');
-        infowindow.open(map, this);
-      });
-    });
+    })(i);
   }
 });
 
 //----------------------------------
 
 $("#lodgeEvent").click(function () {
-
   setMapOnAll(null);
   markers = [];
   for (var i = 0; i < resultsGlobal4.length; i++) {
-    service.getDetails({
-      placeId: resultsGlobal4[i].place_id
-    }, function (place) {
-      let marker = new google.maps.Marker({
-        map: map,
-        position: resultsGlobal4[i].geometry.location
+    (function (i) {
+      service.getDetails({
+        placeId: resultsGlobal4[i].place_id
+      }, function (place) {
+        let marker = new google.maps.Marker({
+          map: map,
+          position: resultsGlobal4[i].geometry.location
+        });
+        markers.push(marker);
+        google.maps.event.addListener(marker, 'click', function () {
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            place.formatted_address + '<br>' +
+            place.formatted_phone_number + '</div>');
+          infowindow.open(map, this);
+        });
       });
-      markers.push(marker);
-      google.maps.event.addListener(marker, 'click', function () {
-
-        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-          'Place ID: ' + place.place_id + '<br>' +
-          place.formatted_address + '</div>');
-        infowindow.open(map, this);
-      });
-    });
+    })(i);
   }
 });
 
