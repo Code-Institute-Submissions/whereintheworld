@@ -21,7 +21,6 @@ $("#contact-event").click(function () {
   $('#contact-modal').modal('open');
 });
 
-
 //----------------------
 
 var placeTypes = [
@@ -39,13 +38,92 @@ var attractId = [
   'musEvent',
   'casEvent'
 ];
+
 //----------------------
+
 var markers = [];
 
 //==============================================================================================================
+//Click trigger for main page (This is to make the tiles on the main page work)
+//==============================================================================================================
 
+var isClickTriggered = false;
+
+function clickTriggered(textQuery) {
+  isClickTriggered = true;
+  var request = {
+    query: textQuery,
+    fields: ['photos', 'formatted_address', 'name', 'rating', 'opening_hours', 'geometry'],
+  };
+
+  service.findPlaceFromQuery(request, function (results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      if (results.length > 0) {
+        var place = results[0];
+      } else {
+        return;
+      }
+      if (!place.geometry) return;
+    }
+
+    //Change The Page Around A Bit When New Destination is Entered
+    $(".sub-heading").addClass("col s4").css("margin-top", "15px");
+    $("#destSearch").removeClass("s10").addClass("s8");
+
+    $("#how-to-btn").hide(500);
+    $(".main-1").show(500);
+    $(".main-2").hide(500);
+
+    //remove old marker
+    marker.setVisible(false);
+
+    //variables **Global**
+    latitude = place.geometry.location.lat();
+    longitude = place.geometry.location.lng();
+    address = place.formatted_address.split(",")[0];
+    photoUrl = place.photos[0].getUrl({
+      maxWidth: 400,
+      maxHeight: 400
+    });
+
+    if (!place.geometry) {
+      // if user enters place that doesnt exist or presses enter (not working)
+      return;
+    }
+
+    if (place.geometry.viewport) {
+      // If the place has a geometry, pan the map over ot it
+      map.fitBounds(place.geometry.viewport);
+      map.setCenter(place.geometry.location);
+      map.setZoom(13);
+    } else {
+      // If the place has no geometry, do this instead
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);
+    }
+
+    $("#placeName").empty().append(`<h1>Attractions in ${address}</h1>`)
+
+    //This cycles through the different attraction functions getting all the info
+    for (j = 0; j < placeTypes.length; j++) {
+      service.nearbySearch({
+        location: {
+          lat: latitude,
+          lng: longitude
+        },
+        radius: 5000,
+        type: placeTypes[j]
+      }, eval(placeTypes[j]));
+    }
+    $("#destSearch").blur();
+    isClickTriggered = false;
+  });
+}
+
+//==============================================================================================================
 //The main Google Maps JS Autocomplete function
 //==============================================================================================================
+
 function initAutocomplete() {
   //Draw google map in 'map' element
   map = new google.maps.Map(document.getElementById('map'), {
@@ -114,6 +192,8 @@ function initAutocomplete() {
 
   //Adds listener and executes function for when search result changes
   autocomplete.addListener('place_changed', function () {
+    // Do not execute this function if click is triggered on first page
+    if (isClickTriggered) return;
     //Change The Page Around A Bit When New Destination is Entered
     $(".sub-heading").addClass("col s4").css("margin-top", "15px");
     $("#destSearch").removeClass("s10").addClass("s8");
