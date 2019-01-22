@@ -194,6 +194,7 @@ function initAutocomplete() {
   autocomplete.addListener('place_changed', function () {
     // Do not execute this function if click is triggered on first page
     if (isClickTriggered) return;
+
     //Change The Page Around A Bit When New Destination is Entered
     $(".sub-heading").addClass("col s4").css("margin-top", "15px");
     $("#destSearch").removeClass("s10").addClass("s8");
@@ -231,11 +232,6 @@ function initAutocomplete() {
       map.setCenter(place.geometry.location);
       map.setZoom(17);
     }
-
-    //The following commented out code places a marker at your city of choice
-    //place marker on SEARCH location
-    //marker.setPosition(place.geometry.location);
-    //marker.setVisible(true);
 
     $("#placeName").empty().append(`<h1>Attractions in ${address}</h1>`)
 
@@ -344,6 +340,7 @@ function showPhotoModal(place) {
     <p class="left-align"><strong>Overall Rating:</strong> ${place.rating}/5</p>
     <p class="left-align"><strong>Telephone Number:</strong> ${place.international_phone_number}</p>
     <p class="left-align"><strong>Website:</strong><a href="${place.website}" target="_blank"> ${place.website}</a></p>
+    <p class="right-align"><strong>Opening Times:</strong></p>
     <p class="right-align">${new_place_times}</p>
     <hr>
     <h2 class="center-align">Reviews</h2>
