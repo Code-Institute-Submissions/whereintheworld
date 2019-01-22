@@ -343,6 +343,7 @@ function showPhotoModal(place) {
     <p class="left-align"><strong>Address:</strong> ${place.formatted_address}</p>
     <p class="left-align"><strong>Overall Rating:</strong> ${place.rating}/5</p>
     <p class="left-align"><strong>Telephone Number:</strong> ${place.international_phone_number}</p>
+    <p class="left-align"><strong>Website:</strong><a href="${place.website}" target="_blank"> ${place.website}</a></p>
     <p class="right-align">${new_place_times}</p>
     <hr>
     <h2 class="center-align">Reviews</h2>
