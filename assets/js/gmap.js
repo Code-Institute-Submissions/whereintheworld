@@ -439,6 +439,7 @@ function restaurant(results, status) {
       });
     }
   }
+  $("#restEvent").click();
 }
 
 
